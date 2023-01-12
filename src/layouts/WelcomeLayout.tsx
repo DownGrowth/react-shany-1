@@ -30,16 +30,16 @@ export const WelcomeLayout: React.FC = () => {
   return (
     <div className='bg-#F2F9EE' h-screen flex flex-col items-stretch pb-16px
     >
-      <header shrink-0 text-center>
+      <header shrink-0 text-center pt-64px>
         <img src={logo} w-64px h-64px/>
-        <h1 text="#6a5e73">山音记账</h1>
+        <h1 text="#6a5e73" text-32px>山音记账</h1>
       </header>
       <main shrink-1 grow-1 relative >
         {transitions((style, pathname) =>
-           <animated.div key={pathname} style={{ ...style, ...extraStyle }} w="100%" h="100%" p-16px flex>
-           <div grow-1 bg-white flex justify-center items-center rounded-8px>
-             {map.current[pathname]}
-           </div>
+        <animated.div key={pathname} style={{ ...style, ...extraStyle }} w="100%" h="100%" p-16px flex>
+        <div grow-1 bg-white flex justify-center items-center rounded-8px>
+          {map.current[pathname]}
+        </div>
     </animated.div>,
         )}
       </main>
