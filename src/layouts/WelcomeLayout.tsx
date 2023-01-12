@@ -1,7 +1,14 @@
 import { animated, useTransition } from '@react-spring/web'
 import type { ReactNode } from 'react'
 import { useRef } from 'react'
-import { useLocation, useOutlet } from 'react-router-dom'
+import { Link, useLocation, useOutlet } from 'react-router-dom'
+import logo from '../assets/images/logo.svg'
+const linkMap: Record<string, string> = {
+  '/welcome/1': '/welcome/2',
+  '/welcome/2': '/welcome/3',
+  '/welcome/3': '/welcome/4',
+  '/welcome/4': '/welcome/xxx',
+}
 export const WelcomeLayout: React.FC = () => {
   const map = useRef<Record<string, ReactNode>>({})
   const location = useLocation()
@@ -13,9 +20,21 @@ export const WelcomeLayout: React.FC = () => {
     leave: { transform: 'translateX(-100%)' },
     config: { duration: 300 },
   })
-  return transitions((style, pathname) =>
+  return (
+    <div>
+      <header>
+        <img src={logo} />
+      </header>
+    <main> {transitions((style, pathname) =>
     <animated.div key={pathname} style={style}>
       {map.current[pathname]}
     </animated.div>,
+    )}
+      </main>
+      <footer>
+        <Link to={linkMap[location.pathname]}></Link>
+        <Link to="welcome/xxx">跳过</Link>
+      </footer>
+      </div>
   )
 }
