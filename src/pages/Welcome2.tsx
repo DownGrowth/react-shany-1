@@ -1,7 +1,7 @@
 import p2 from '../assets/images/welcome2.svg'
 export const Welcome2: React.FC = () => {
   return (<div >
-    <img src={p2}/>
+    <img w-200px h-200px src={p2}/>
     <h2 text-center>
       泉水叮咚 <br />
       绝不漏记
