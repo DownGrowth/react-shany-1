@@ -10,6 +10,11 @@ const linkMap: Record<string, string> = {
   '/welcome/3': '/welcome/4',
   '/welcome/4': '/welcome/xxx',
 }
+const backMap: Record<string, string> = {
+  '/welcome/2': '/welcome/1',
+  '/welcome/3': '/welcome/2',
+  '/welcome/4': '/welcome/3',
+}
 export const WelcomeLayout: React.FC = () => {
   const main = useRef<HTMLElement>(null)
   const { direction } = useSwipe(main, { onTouchStart: e => e.preventDefault() })
@@ -20,9 +25,9 @@ export const WelcomeLayout: React.FC = () => {
   map.current[location.pathname] = outlet
   const [extraStyle, setExtraStyle] = useState<{ position: 'relative' | 'absolute' }>({ position: 'relative' })
   const transitions = useTransition(location.pathname, {
-    from: { transform: location.pathname === '/welcome/1' ? 'translateX(0%)' : 'translateX(100%)' },
+    from: { transform: direction === 'right' ? 'translateX(-100%)' : location.pathname === '/welcome/1' ? 'translateX(0%)' : 'translateX(100%)' },
     enter: { transform: 'translateX(0%)' },
-    leave: { transform: 'translateX(-100%)' },
+    leave: { transform: direction === 'left' ? 'translateX(-100%)' : 'translateX(100%)' },
     config: { duration: 300 },
     onStart: () => {
       setExtraStyle({ position: 'absolute' })
@@ -34,12 +39,18 @@ export const WelcomeLayout: React.FC = () => {
   })
   const nav = useNavigate()
   useEffect(() => {
+    if (animating.current) { return }
     if (direction === 'left') {
-      if (animating.current) { return }
       animating.current = true
       nav(linkMap[location.pathname])
     }
-  }, [direction, location.pathname, linkMap])
+    if (direction === 'right') {
+      animating.current = true
+      nav(backMap[location.pathname])
+      if (location.pathname === '/welcome/1')
+        animating.current = false
+    }
+  }, [direction, location.pathname, linkMap, backMap])
   return (
     <div className='bg-#F2F9EE' h-screen flex flex-col items-stretch pb-16px
     >
