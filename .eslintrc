@@ -2,6 +2,9 @@
     "extends": "@antfu",
     "rules": {
         "curly": "off",
+        "@typesecript-eslint/brace-style":"off",
+        "max-statements-per-line":"off",
+        "no-console":"off",
         "@typescript-eslint/no-unused-vars": [
           "error",
           {
