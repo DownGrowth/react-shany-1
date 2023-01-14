@@ -27,7 +27,7 @@ export const WelcomeLayout: React.FC = () => {
   const transitions = useTransition(location.pathname, {
     from: { transform: direction === 'right' ? 'translateX(-100%)' : location.pathname === '/welcome/1' ? 'translateX(0%)' : 'translateX(100%)' },
     enter: { transform: 'translateX(0%)' },
-    leave: { transform: direction === 'left' ? 'translateX(-100%)' : 'translateX(100%)' },
+    leave: { transform: direction === 'right' ? 'translateX(100%)' : 'translateX(-100%)' },
     config: { duration: 300 },
     onStart: () => {
       setExtraStyle({ position: 'absolute' })
@@ -51,6 +51,10 @@ export const WelcomeLayout: React.FC = () => {
         animating.current = false
     }
   }, [direction, location.pathname, linkMap, backMap])
+  const onSkip = () => {
+    localStorage.setItem('hasReadWelcomes', 'yes')
+    console.log('存储了')
+  }
   return (
     <div className='bg-#F2F9EE' h-screen flex flex-col items-stretch pb-16px
     >
@@ -69,7 +73,7 @@ export const WelcomeLayout: React.FC = () => {
       </main>
       <footer shrink-0 text-center text-24px text="#6a5e73" grid grid-cols-3 grid-rows-1>
         <Link style={{ gridArea: '1 / 2 / 2 / 3 ' }} to={linkMap[location.pathname]}>下一页</Link>
-        <Link style={{ gridArea: '1 / 3 / 2 / 4 ' }} to="welcome/xxx">跳过</Link>
+        <Link style={{ gridArea: '1 / 3 / 2 / 4 ' }} to="/home" onClick={onSkip}>跳过</Link>
       </footer>
       </div>
   )
