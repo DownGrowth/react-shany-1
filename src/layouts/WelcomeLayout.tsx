@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useOutlet } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
 import { useSwipe } from '../hooks/useSwipe'
+import { useLocalStore } from '../stores/useLocalStore'
 const linkMap: Record<string, string> = {
   '/welcome/1': '/welcome/2',
   '/welcome/2': '/welcome/3',
@@ -51,9 +52,9 @@ export const WelcomeLayout: React.FC = () => {
         animating.current = false
     }
   }, [direction, location.pathname, linkMap, backMap])
+  const { setHasReadWelcomes } = useLocalStore()
   const onSkip = () => {
-    localStorage.setItem('hasReadWelcomes', 'yes')
-    console.log('存储了')
+    setHasReadWelcomes(true)
   }
   return (
     <div className='bg-#F2F9EE' h-screen flex flex-col items-stretch pb-16px
