@@ -1,6 +1,17 @@
+import useSWR from 'swr'
+import axios from 'axios'
 import p from '../assets/images/mountain.svg'
 import add from '../assets/images/add.svg'
-export const Home: React.FC = () => {
+interface Props {
+  title: string
+}
+export const Home: React.FC<Props> = () => {
+  const { data: meData, error: meError } = useSWR('/api/v1/me', (path) => {
+    return axios.get(`http://121.196.236.94:8080${path}`)
+  })
+  const { data: itemsData, error: itemsError } = useSWR(meData ? '/api/v1/items' : null, (path) => {
+    return axios.get(`http://121.196.236.94:8080${path}`)
+  })
   return <div>
     <div flex justify-center items-center>
       <img mt-20vh mb-20vh width="186" height="186" src={p} />
