@@ -2,15 +2,16 @@ import useSWR from 'swr'
 import axios from 'axios'
 import p from '../assets/images/mountain.svg'
 import add from '../assets/images/add.svg'
+import { ajax } from '../lib/ajax'
 interface Props {
   title: string
 }
 export const Home: React.FC<Props> = () => {
   const { data: meData, error: meError } = useSWR('/api/v1/me', (path) => {
-    return axios.get(path)
+    return ajax.get(path)
   })
   const { data: itemsData, error: itemsError } = useSWR(meData ? '/api/v1/items' : null, (path) => {
-    return axios.get(path)
+    return ajax.get(path)
   })
   return <div>
     <div flex justify-center items-center>
