@@ -3,10 +3,12 @@ import { Navigate } from 'react-router-dom'
 import p from '../assets/images/mountain.svg'
 import add from '../assets/images/add.svg'
 import { ajax } from '../lib/ajax'
+import { useTitle } from '../hooks/useTitle'
 interface Props {
   title?: string
 }
-export const Home: React.FC<Props> = () => {
+export const Home: React.FC<Props> = (props) => {
+  useTitle(props.title)
   const { data: meData, error: meError } = useSWR('/api/v1/me', async path => ((await ajax.get<Resource<User>>(path)).data.resource)
   )
   const { data: itemsData, error: itemsError } = useSWR(meData ? '/api/v1/items' : null, async path => ((await ajax.get<Resources<Item>>(path)).data))

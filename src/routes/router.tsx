@@ -10,7 +10,7 @@ import { Welcome4 } from '../pages/Welcome4'
 export const router = createBrowserRouter([
   {
     path: '/home',
-    element: <Home />
+    element: <Home title="首页"/>
   },
   {
     path: '/',
