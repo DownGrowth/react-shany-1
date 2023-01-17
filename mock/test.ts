@@ -2,6 +2,7 @@ import type { MockMethod } from 'vite-plugin-mock'
 export default [{
   url: '/api/v1/me',
   method: 'get',
+  timeout: '10000',
   response: (): Resource<User> => {
     return {
       resource: {
