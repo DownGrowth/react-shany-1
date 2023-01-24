@@ -20,6 +20,9 @@ export const ItemsList: React.FC = () => {
   if (!data) {
     return <span>还没搞定</span>
   } else {
+    const last = data[data.length - 1]
+    const { page, per_page, count } = last.pager
+    const hasMore = (page - 1) * per_page + last.resources.length < count
     return <> <ol>{data.map(({ resources }) => {
       return resources.map(item => (
         <li key={item.id} grid grid-cols="[auto_1fr_auto]" grid-rows-2 px-16px py-8px gap-x-12px
@@ -40,9 +43,9 @@ export const ItemsList: React.FC = () => {
         </li>
       ))
     })}</ol>
-      <div p-16px flex justify-center items-center>
-        <button b-btn onClick={onLoadMore}>加载更多</button>
-      </div>
+        {hasMore
+          ? <div p-16px text-center><button b-btn onClick={onLoadMore}>加载更多</button></div>
+          : <div p-16px text-center>没有更多数据了</div>}
     </>
   }
 }
