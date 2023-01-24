@@ -22,9 +22,13 @@ export const ItemsList: React.FC = () => {
   const onLoadMore = () => {
     setSize(size + 1)
   }
+  const isLoadingInitialData = !data && !error
+  const isLoadingMore = data?.[size - 1] === undefined && !error
+  const isLoading = isLoadingInitialData || isLoadingMore
   if (!data) {
     return <div>
-      {error && <Div>数据加载失败，请刷新页面</Div> }
+      {error && <Div>数据加载失败，请刷新页面</Div>}
+      {isLoading && <Div>数据加载中...</Div>}
     </div>
   } else {
     const last = data[data.length - 1]
@@ -50,10 +54,12 @@ export const ItemsList: React.FC = () => {
         </li>
       ))
     })}</ol>
-      {error && <Div>数据加载失败，请刷新页面</Div>}
-        {hasMore
-          ? <Div p-16px text-center><button b-btn onClick={onLoadMore}>加载更多</button></Div>
-          : <Div p-16px text-center>没有更多数据了</Div>}
+        {error && <Div>数据加载失败，请刷新页面</Div>}
+      {!hasMore
+        ? <Div>没有更多数据了</Div>
+        : isLoading
+          ? <Div>数据加载中...</Div>
+          : <Div><button b-btn onClick={onLoadMore}>加载更多</button></Div>}
     </>
   }
 }
