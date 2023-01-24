@@ -7,7 +7,7 @@ export default defineConfig({
   theme: {
   },
   shortcuts: {
-    'b-btn': 'h-48px w-100% bg-#C1E9F8 b-none text-#666666 font-black text-lg rounded-8px'
+    'b-btn': 'h-48px w-100%  bg-#C1E9F8 b-none text-#666666 font-black text-lg rounded-8px'
   },
   safelist: [],
   presets: [
