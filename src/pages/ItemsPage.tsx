@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import styled from 'styled-components'
 import { AddItemFloatButton } from '../components/AddItemFloatButton'
+import { Gradient } from '../components/Gradient'
+import { Icon } from '../components/Icon'
 import type { TimeRange } from '../components/TimeRangePicker'
 import { TimeRangePicker } from '../components/TimeRangePicker'
 import { TopMenu } from '../components/TopMenu'
@@ -9,24 +10,22 @@ import { useMenuStore } from '../stores/useMenuStore'
 import { ItemsList } from './ItemsList'
 import { ItemSummary } from './ItemsSummary'
 
-const Div = styled.div`
-background:linear-gradient(0deg,  rgba(255,252,237,1)0%, rgba(193,233,248,1) 100%);
-`
-
 export const ItemsPage: React.FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>('thisMonth')
   const { visible, setVisible } = useMenuStore()
   return (
     <div>
-      <Div>
-        <TopNav />
+      <Gradient>
+        <TopNav title='账目列表'
+          icon={<Icon name='menu' className='w-24px h-24px'
+            onClick={() => { setVisible(!visible) }} />} />
         <TimeRangePicker selected={timeRange}
           onSelected={key => setTimeRange(key)} />
-      </Div>
+      </Gradient>
       <ItemSummary />
       <ItemsList />
       <AddItemFloatButton />
-      {<TopMenu visible={visible} onClickMask={() => { setVisible(false) }}/>}
+      {<TopMenu visible={visible} onClickMask={() => { setVisible(false) }} />}
     </div>
   )
 }
