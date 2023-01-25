@@ -2,6 +2,7 @@ var isDev: boolean
 interface Resource<T> {
   resource: T
 }
+type JSONValue = string | number | boolean | null | { [k: string]: JSONValue } | JSONValue[]
 interface Resources<T> {
   resources: T[]
   pager: {

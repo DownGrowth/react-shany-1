@@ -1,4 +1,3 @@
-type JSONValue = string | number | boolean | null | { [k: string]: JSONValue } | JSONValue[]
 interface Data {
   [k: string]: JSONValue
 }
@@ -71,7 +70,6 @@ export const validate = <T extends Data>(formData: T, rules: Rules<T>): FormErro
         break
     }
   })
-  console.log(error)
   return error
 }
 
