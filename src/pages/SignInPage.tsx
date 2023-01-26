@@ -42,9 +42,10 @@ export const SignInPage: React.FC = () => {
           <span b-form-label>验证码{error.code?.[0] && <span text-red>{error.code[0]}</span>}</span>
           <div flex gap-x-16px>
             <input b-input-text type="text" placeholder='六位数字'
+              max-w="[calc(40%-8px)]"
             value={data.code} onChange={e => setData({ code: e.target.value })}
             />
-            <button b-btn>发送验证码</button>
+            <button b-btn max-w="[calc(60%-8px)]">发送验证码</button>
           </div>
         </div>
         <div mt-100px>

@@ -1,7 +1,7 @@
 import { animated, useTransition } from '@react-spring/web'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { Link, useLocation, useNavigate, useOutlet } from 'react-router-dom'
+import { useLocation, useNavigate, useOutlet } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
 import { useSwipe } from '../hooks/useSwipe'
 import { useLocalStore } from '../stores/useLocalStore'
@@ -55,11 +55,12 @@ export const WelcomeLayout: React.FC = () => {
   const { setHasReadWelcomes } = useLocalStore()
   const onSkip = () => {
     setHasReadWelcomes(true)
+    nav('/home')
   }
   return (
     <div className='bg-#F2F9EE' h-screen flex flex-col items-stretch pb-16px
     >
-       <Link fixed text-white top-16px right-16px text-32px to="/welcome/xxx">跳过</Link>
+       <span fixed text="#5099ac" top-16px right-16px text-24px onClick={onSkip}>跳过</span>
       <header shrink-0 text-center pt-64px>
         <img src={logo} w-64px h-64px/>
         <h1 text="[var(--text-main)]" text-32px>山音记账</h1>
