@@ -20,7 +20,7 @@ export const ItemsPage: React.FC = () => {
           icon={<Icon name='menu' className='w-24px h-24px'
             onClick={() => { setVisible(!visible) }} />} />
         <TimeRangePicker selected={timeRange}
-          onSelected={key => setTimeRange(key)} />
+          onSelect={ setTimeRange} />
       </Gradient>
       <ItemSummary />
       <ItemsList />
