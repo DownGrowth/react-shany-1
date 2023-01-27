@@ -1,20 +1,24 @@
+import type { ReactNode } from 'react'
 import { useState } from 'react'
 import { Gradient } from '../components/Gradient'
 import { Icon } from '../components/Icon'
 import { Tabs } from '../components/Tabs'
 import { TopNav } from '../components/TopNav'
+import s from './ItemsNewPage.module.scss'
+import { DateAndAmount } from './ItemsNewPage/DateAndAmount'
+import { Tags } from './ItemsNewPage/Tags'
 
-type itemKind = 'income' | 'expenses'
 export const ItemsNewPage: React.FC = () => {
-  const tabItems: { key: itemKind; text: string }[]
-    = [{ key: 'income', text: '收入' }, { key: 'expenses', text: '支出' }]
-  const [tabItem, setTabItem] = useState<itemKind>('expenses')
+  const tabItems: { key: Item['kind']; text: string; element?: ReactNode }[]
+    = [{ key: 'expenses', text: '支出', element: <Tags kind="expenses"/> }, { key: 'income', text: '收入', element: <Tags kind="income" /> }]
+  const [tabItem, setTabItem] = useState<Item['kind']>('expenses')
   return (
-    <div>
-      <Gradient>
+    <div className={s.wrapper} h-screen flex flex-col>
+      <Gradient className='grow-0 shrink-0'>
         <TopNav title='记一笔' icon={<Icon name="back" className='w-24px h-24px' />} />
-        <Tabs tabItems={tabItems} value={tabItem} onChange={item => setTabItem(item) } />
-      </Gradient>
+        </Gradient>
+      <Tabs tabItems={tabItems} className="text-center grow-1 shrink-1 overflow-hidden" classPrefix='ItemsNewPage' value={tabItem} onChange={tabItem => setTabItem(tabItem)} />
+      <DateAndAmount className="grow-0 shrink-0"/>
     </div>
   )
 }
