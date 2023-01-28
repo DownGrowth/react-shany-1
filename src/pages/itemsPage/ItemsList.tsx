@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import useSWRInfinite from 'swr/infinite'
-import { ajax } from '../lib/ajax'
+import { ajax } from '../../lib/ajax'
 const Div = styled.div`
   padding:16px;
   text-align:center

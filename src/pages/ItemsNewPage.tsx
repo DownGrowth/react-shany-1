@@ -14,7 +14,7 @@ export const ItemsNewPage: React.FC = () => {
   const [tabItem, setTabItem] = useState<Item['kind']>('expenses')
   return (
     <div className={s.wrapper} h-screen flex flex-col>
-      <Gradient className='grow-0 shrink-0'>
+      <Gradient className="grow-0 shrink-0">
         <TopNav title='记一笔' icon={<Icon name="back" className='w-24px h-24px' />} />
         </Gradient>
       <Tabs tabItems={tabItems} className="text-center grow-1 shrink-1 overflow-hidden" classPrefix='ItemsNewPage' value={tabItem} onChange={tabItem => setTabItem(tabItem)} />

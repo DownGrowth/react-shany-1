@@ -7,8 +7,8 @@ import { TimeRangePicker } from '../components/TimeRangePicker'
 import { TopMenu } from '../components/TopMenu'
 import { TopNav } from '../components/TopNav'
 import { useMenuStore } from '../stores/useMenuStore'
-import { ItemsList } from './ItemsList'
-import { ItemSummary } from './ItemsSummary'
+import { ItemsList } from './itemsPage/ItemsList'
+import { ItemSummary } from './itemsPage/ItemsSummary'
 
 export const ItemsPage: React.FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>('thisMonth')
