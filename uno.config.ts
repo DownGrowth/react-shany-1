@@ -13,6 +13,9 @@ export default defineConfig({
     'b-form-label': 'text-18px mb-8px',
   },
   safelist: [],
+  rules: [
+    ['h-screen', { height: 'cacl(100vh-var(--vh-offset,0px))' }]
+  ],
   presets: [
     presetUno(),
     presetAttributify(),
