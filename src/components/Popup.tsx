@@ -34,7 +34,7 @@ export const Popup: React.FC<Props> = (props) => {
         z="[calc(var(--z-popup)-1)]" onClick={onClickMask} style={styles}
       />
       <animated.div fixed bottom-0 left-0 w-full min-h-100px bg-white
-        z="[calc(var(--z-popup))]" style={menuStyles}>
+        z="[calc(var(--z-popup))]" style={menuStyles} rounded-t-8px overflow-hidden>
         {children}
       </animated.div>
     </div>

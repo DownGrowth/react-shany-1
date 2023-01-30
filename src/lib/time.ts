@@ -16,9 +16,9 @@ export const time = (p?: number | string | Date) => {
   return new Time(p)
 }
 export class Time {
-  date: Date
+  #date: Date
   constructor(p?: number | string | Date) {
-    this.date = p ? new Date(p) : new Date()
+    this.#date = p ? new Date(p) : new Date()
   }
 
   /**
@@ -56,18 +56,26 @@ export class Time {
     return this
   }
 
+  get date() {
+    return new Date(this.#date)
+  }
+
   get timestamp() {
-    return this.date.getTime()
+    return this.#date.getTime()
+  }
+
+  get lastDayOfMonth() {
+    return new Time(new Date(this.year, this.month - 1 + 1, 0))
   }
 
   get parts(): Parts {
-    const year = this.date.getFullYear()
-    const month = this.date.getMonth() + 1
-    const day = this.date.getDate()
-    const hours = this.date.getHours()
-    const minutes = this.date.getMinutes()
-    const seconds = this.date.getSeconds()
-    const ms = this.date.getMilliseconds()
+    const year = this.#date.getFullYear()
+    const month = this.#date.getMonth() + 1
+    const day = this.#date.getDate()
+    const hours = this.#date.getHours()
+    const minutes = this.#date.getMinutes()
+    const seconds = this.#date.getSeconds()
+    const ms = this.#date.getMilliseconds()
     return {
       year, month, day, hours, minutes, seconds, ms
     }
@@ -87,7 +95,7 @@ export class Time {
       const k = key as keyof typeof p
       const methodName = table[k]
       value = k === 'month' ? value - 1 : value
-      this.date[methodName](value)
+      this.#date[methodName](value)
     })
   }
 
