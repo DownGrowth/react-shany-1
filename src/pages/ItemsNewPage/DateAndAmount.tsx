@@ -24,11 +24,17 @@ export const DateAndAmount: React.FC<Props> = (props) => {
       }
     }}
     onTouchEnd={() => {
+      const reaminder = translateY % 36
+      let y = translateY - reaminder
+      if (Math.abs(reaminder) >= 18) {
+        y += 36 * (reaminder > 0 ? 1 : -1)
+      }
+      setTranslateY(y)
       setIsTouching(false)
     }}
   >
     <div b-1 b-red h-36px absolute top="[calc(50%-18px)]" w-full />
-    <div b-1 b-red h-36px absolute top="[calc(50%-18px)]" w-full>
+    <div absolute top="[calc(50%-18px-108px)]" w-full>
       <ol style={{ transform: `translateY(${translateY}px)` }}
         children-h-36px text-center children-leading-36px>
         <li>2000</li>
@@ -86,7 +92,6 @@ export const DateAndAmount: React.FC<Props> = (props) => {
           <button row-start-3 col-start-4 row-end-5 col-end-5>提交</button>
         </div>
       </div>
-
     </>
   )
 }
