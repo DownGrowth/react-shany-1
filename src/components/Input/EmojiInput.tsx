@@ -24,7 +24,7 @@ export const EmojiInput: React.FC<Props> = (props) => {
             grid grid-cols="[repeat(auto-fit,34px)]" grid-rows="[repeat(auto-fit,34px)]"
             justify-center>
             {emoji.chars.map(char =>
-               <span b-1 b-transparent className={char === value ? s.selected : ''} rounded-4px onClick={() => value !== char && onChange?.(char)}>{char}</span>)}
+               <span key={char} b-1 b-transparent rounded-4px className={char === value ? s.selected : ''} onClick={() => value !== char && onChange?.(char)}>{char}</span>)}
           </div>)}
       </div>
     </div>
