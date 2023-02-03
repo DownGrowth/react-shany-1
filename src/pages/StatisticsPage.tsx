@@ -12,7 +12,7 @@ export const StatisticsPage: React.FC = () => {
     { date: '2000-01-01', value: 15000 },
     { date: '2000-01-02', value: 25000 },
     { date: '2000-01-31', value: 10000 },
-  ].map(item => ({ x: item.date, y: item.value }))
+  ].map(item => ({ x: item.date, y: item.value / 100 }))
   return (
     <div>
       <Gradient>
@@ -21,7 +21,7 @@ export const StatisticsPage: React.FC = () => {
         } />
       </Gradient>
       <TimeRangePicker selected={timeRange} onSelect={setTimeRange} />
-      <LineChart className="h-400px" items={items} />
+      <LineChart className="h-120px" items={items} />
     </div>
   )
 }
