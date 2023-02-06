@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { EmojiInput } from './Input/EmojiInput'
+import { SmsCodeInput } from './Input/SmsCodeInput'
 
 type Props = {
   label?: string | ReactNode
@@ -9,10 +10,10 @@ type Props = {
   error?: string
   disableError?: boolean
 } & (
-  | { type: 'text' }
-  | { type: 'emoji' }
-  | { type: 'sms_code'; onClick: () => void }
-  | { type: 'select'; options: { value: string; text: string }[] }
+  | { type?: 'text' }
+  | { type?: 'emoji' }
+  | { type?: 'sms_code'; onClick: () => void }
+  | { type?: 'select'; options: { value: string; text: string }[] }
 )
 export const Input: React.FC<Props> = (props) => {
   const { label, placeholder, type, value, onChange, error, disableError } = props
@@ -33,13 +34,7 @@ export const Input: React.FC<Props> = (props) => {
         </select>
       case 'sms_code':
         return (
-          <div flex gap-x-16px>
-            <input shrink-1 b-input-text type="text" placeholder={placeholder}
-              max-w="[calc(40%-8px)]"
-              value={value} onChange={e => onChange?.(e.target.value)}
-            />
-            <button type='button' b-btn max-w="[calc(60%-8px)]" onClick={props.onClick}>发送验证码</button>
-          </div>
+          <SmsCodeInput placeholder={placeholder} value={value} onChange={onChange} onClick={props.onClick} />
         )
       default:
         return null
