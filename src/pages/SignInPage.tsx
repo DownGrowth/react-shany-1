@@ -6,6 +6,7 @@ import { Gradient } from '../components/Gradient'
 import { Icon } from '../components/Icon'
 import { Input } from '../components/Input'
 import { TopNav } from '../components/TopNav'
+import { usePopup } from '../hooks/usePopup'
 import { ajax } from '../lib/ajax'
 import type { FormError } from '../lib/validate'
 import { hasError, validate } from '../lib/validate'
@@ -38,19 +39,21 @@ export const SignInPage: React.FC = () => {
       nav('/home')
     }
   }
+  const { popup, hide, show } = usePopup(false, <div>加载中</div>)
   const sendSmsCode = async () => {
     const newError = validate(data, [
       { key: 'email', type: 'required', message: '请输入邮箱地址' },
       { key: 'email', type: 'pattern', regex: /^.+@.+$/, message: '邮箱地址格式不正确' }
     ])
     setError(newError)
-    if (!hasError(newError)) {
-      const response = await axios.post('http://121.196.236.94:8080/api/v1/validation_codes', { email: data.email })
-      return response
-    }
+    if (hasError(newError)) { throw new Error('表单出错') }
+    show()
+    const response = await axios.post('http://121.196.236.94:8080/api/v1/validation_codes', { email: data.email }).finally(() => hide())
+    return response
   }
   return (
     <div>
+      {popup }
       <Gradient>
         <TopNav title='登录页面' icon={<Icon name="back" className='w-24px h-24px'/> } />
       </Gradient>
