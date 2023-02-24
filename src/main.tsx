@@ -7,6 +7,7 @@ import './global.scss'
 import 'virtual:uno.css'
 import './app.scss'
 import 'virtual:svgsprites'
+
 vhCheck()
 const div = document.getElementById('root') as HTMLElement
 
