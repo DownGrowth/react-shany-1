@@ -25,7 +25,7 @@ export const Loading: React.FC<Props> = ({ className, message }) => {
   return (
     <Div className={c('flex flex-col justify-center items-center', className)}>
       <Icon name="loading" className='fill-#C1E9F8 w-64px h-64px' />
-      <p p-8px text-lg>{message || '加载中……'}</p>
+      {message ? <p p-8px text-lg>{message}</p> : ''}
     </Div>
   )
 }

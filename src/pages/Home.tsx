@@ -17,7 +17,7 @@ export const Home: React.FC<Props> = (props) => {
   const isLoadingMe = !meData && !meError
   const isLoadingItems = meData && !itemsData && !itemsError
   if (isLoadingMe || isLoadingItems) {
-    return <Loading className="h-screen" />
+    return <Loading className="h-screen" message='加载中...'/>
   }
   if (itemsData?.resources[0]) {
     return <Navigate to="/items" />

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Gradient } from '../components/Gradient'
 import { Icon } from '../components/Icon'
 import { Input } from '../components/Input'
+import { Loading } from '../components/Loading'
 import { TopNav } from '../components/TopNav'
 import { usePopup } from '../hooks/usePopup'
 import { ajax } from '../lib/ajax'
@@ -39,7 +40,7 @@ export const SignInPage: React.FC = () => {
       nav('/home')
     }
   }
-  const { popup, hide, show } = usePopup({ children: <div>加载中</div>, position: 'center' })
+  const { popup, hide, show } = usePopup({ children: <Loading className="p-8px" />, position: 'center' })
   const sendSmsCode = async () => {
     const newError = validate(data, [
       { key: 'email', type: 'required', message: '请输入邮箱地址' },

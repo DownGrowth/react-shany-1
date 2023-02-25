@@ -6,9 +6,10 @@ type Props = {
   visible: boolean
   onClickMask?: () => void
   children?: ReactNode
+  position?: 'bottom' | 'center'
 }
 export const Popup: React.FC<Props> = (props) => {
-  const { visible, onClickMask, children } = props
+  const { visible, onClickMask, children, position } = props
   const [maskVisible, setMaskVisible] = useState(visible)
   const maskStyles = useSpring({
     opacity: visible ? 1 : 0,
@@ -25,18 +26,32 @@ export const Popup: React.FC<Props> = (props) => {
   })
   const wrapperStyles = useSpring({
     opacity: visible ? 1 : 0,
-    transform: visible ? 'translateY(0%)' : 'translateY(100%)'
+    transform: position === 'bottom'
+      ? (visible
+          ? 'translateY(0%)'
+          : 'translateY(100%)')
+      : ''
   })
   const styles = { ...maskStyles, visibility: (maskVisible ? 'visible' : 'hidden') as 'visible' | 'hidden' }
   return (
     <div touch-none>
-      <animated.div fixed top-0 left-0 h-full w-full className="bg-black:25"
+      {position === 'bottom'
+        ? <><animated.div fixed top-0 left-0 h-full w-full className="bg-black:25"
         z="[calc(var(--z-popup)-1)]" onClick={onClickMask} style={styles}
-      />
-      <animated.div fixed bottom-0 left-0 w-full min-h-100px bg-white
-        z="[calc(var(--z-popup))]" style={wrapperStyles} rounded-t-8px overflow-hidden>
-        {children}
-      </animated.div>
+      /> <animated.div fixed bottom-0 left-0 w-full min-h-100px bg-white
+      z="[calc(var(--z-popup))]" style={wrapperStyles} rounded-t-8px overflow-hidden>
+      {children}
+          </animated.div>
+          </>
+        : <><animated.div fixed top-0 left-0 h-full w-full className="bg-black:25"
+      z="[calc(var(--z-popup)-1)]" style={styles}
+        />
+        <animated.div fixed bg-white left="[50%]" top="[50%]"
+        translate-x="-50%" translate-y="-50%"
+      z="[calc(var(--z-popup))]" style={wrapperStyles} rounded-8px overflow-hidden>
+      {children}
+    </animated.div>
+    </>}
     </div>
   )
 }
