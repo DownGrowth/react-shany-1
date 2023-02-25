@@ -1,14 +1,11 @@
 import type { AxiosError } from 'axios'
-import axios from 'axios'
 import type { FormEventHandler } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Gradient } from '../components/Gradient'
 import { Icon } from '../components/Icon'
 import { Input } from '../components/Input'
-import { Loading } from '../components/Loading'
 import { TopNav } from '../components/TopNav'
-import { usePopup } from '../hooks/usePopup'
-import { ajax } from '../lib/ajax'
+import { ajax, useAjax } from '../lib/ajax'
 import type { FormError } from '../lib/validate'
 import { hasError, validate } from '../lib/validate'
 import { useSignInStore } from '../stores/useSignInStore'
@@ -40,7 +37,7 @@ export const SignInPage: React.FC = () => {
       nav('/home')
     }
   }
-  const { popup, hide, show } = usePopup({ children: <Loading className="p-8px" />, position: 'center' })
+  const { post } = useAjax({ showLoading: true })
   const sendSmsCode = async () => {
     const newError = validate(data, [
       { key: 'email', type: 'required', message: '请输入邮箱地址' },
@@ -48,13 +45,11 @@ export const SignInPage: React.FC = () => {
     ])
     setError(newError)
     if (hasError(newError)) { throw new Error('表单出错') }
-    show()
-    const response = await axios.post('http://121.196.236.94:8080/api/v1/validation_codes', { email: data.email }).finally(() => hide())
+    const response = await post('http://121.196.236.94:8080/api/v1/validation_codes', { email: data.email })
     return response
   }
   return (
     <div>
-      {popup }
       <Gradient>
         <TopNav title='登录页面' icon={<Icon name="back" className='w-24px h-24px'/> } />
       </Gradient>
