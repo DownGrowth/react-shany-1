@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import useSWRInfinite from 'swr/infinite'
-import { ajax } from '../../lib/ajax'
+import { useAjax } from '../../lib/ajax'
 const Div = styled.div`
   padding:16px;
   text-align:center
@@ -16,8 +16,9 @@ const getKey = (pageIndex: number, prev: Resources<Item>) => {
   return `/api/v1/items?page=${pageIndex + 1}`
 }
 export const ItemsList: React.FC = () => {
+  const { get } = useAjax()
   const { data, error, size, setSize } = useSWRInfinite(
-    getKey, async path => (await ajax.get<Resources<Item>>(path)).data,
+    getKey, async path => (await get<Resources<Item>>(path)).data,
     { revalidateFirstPage: false }
   )
   const onLoadMore = () => {

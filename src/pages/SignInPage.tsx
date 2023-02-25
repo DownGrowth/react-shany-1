@@ -5,7 +5,7 @@ import { Gradient } from '../components/Gradient'
 import { Icon } from '../components/Icon'
 import { Input } from '../components/Input'
 import { TopNav } from '../components/TopNav'
-import { ajax, useAjax } from '../lib/ajax'
+import { useAjax } from '../lib/ajax'
 import type { FormError } from '../lib/validate'
 import { hasError, validate } from '../lib/validate'
 import { useSignInStore } from '../stores/useSignInStore'
@@ -13,6 +13,7 @@ import { useSignInStore } from '../stores/useSignInStore'
 export const SignInPage: React.FC = () => {
   const { data, error, setData, setError } = useSignInStore()
   const nav = useNavigate()
+  const { post } = useAjax({ showLoading: true })
   const onSubmitError = (err: AxiosError<{ errors: FormError<typeof data> }>) => {
     setError(err.response?.data?.errors ?? {})
     throw error
@@ -28,7 +29,7 @@ export const SignInPage: React.FC = () => {
     setError(newError)
     if (!hasError(newError)) {
       // 发送请求
-      const response = await ajax.post<{ jwt: string }>('http://121.196.236.94:8080/api/v1/session', data).catch(onSubmitError)
+      const response = await post<{ jwt: string }>('http://121.196.236.94:8080/api/v1/session', data).catch(onSubmitError)
       // 获取 JWT
       const jwt = response.data.jwt
       // JWT 放入LS
@@ -37,7 +38,6 @@ export const SignInPage: React.FC = () => {
       nav('/home')
     }
   }
-  const { post } = useAjax({ showLoading: true })
   const sendSmsCode = async () => {
     const newError = validate(data, [
       { key: 'email', type: 'required', message: '请输入邮箱地址' },
