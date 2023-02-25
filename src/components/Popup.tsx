@@ -23,7 +23,7 @@ export const Popup: React.FC<Props> = (props) => {
       }
     }
   })
-  const menuStyles = useSpring({
+  const wrapperStyles = useSpring({
     opacity: visible ? 1 : 0,
     transform: visible ? 'translateY(0%)' : 'translateY(100%)'
   })
@@ -34,7 +34,7 @@ export const Popup: React.FC<Props> = (props) => {
         z="[calc(var(--z-popup)-1)]" onClick={onClickMask} style={styles}
       />
       <animated.div fixed bottom-0 left-0 w-full min-h-100px bg-white
-        z="[calc(var(--z-popup))]" style={menuStyles} rounded-t-8px overflow-hidden>
+        z="[calc(var(--z-popup))]" style={wrapperStyles} rounded-t-8px overflow-hidden>
         {children}
       </animated.div>
     </div>

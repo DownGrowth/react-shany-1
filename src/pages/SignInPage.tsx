@@ -39,7 +39,7 @@ export const SignInPage: React.FC = () => {
       nav('/home')
     }
   }
-  const { popup, hide, show } = usePopup(false, <div>加载中</div>)
+  const { popup, hide, show } = usePopup({ children: <div>加载中</div>, position: 'center' })
   const sendSmsCode = async () => {
     const newError = validate(data, [
       { key: 'email', type: 'required', message: '请输入邮箱地址' },
