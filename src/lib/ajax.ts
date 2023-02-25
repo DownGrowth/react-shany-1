@@ -1,7 +1,6 @@
 import type { AxiosRequestConfig } from 'axios'
 import axios from 'axios'
-import { useContext } from 'react'
-import { LoadingContext } from '../App'
+import { useLoadingStore } from '../stores/useLoadingStore'
 // 静态配置项用 defaults 配置
 axios.defaults.baseURL = isDev ? '/' : 'http://121.196.236.94:8080/api/v1'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -27,15 +26,15 @@ type Options = {
 }
 export const useAjax = (options?: Options) => {
   const showLoading = options?.showLoading || false
-  const { show, hide } = useContext(LoadingContext)
+  const { setVisible } = useLoadingStore()
   const ajax = {
     get: <T>(path: string, config?: AxiosRequestConfig<any>) => {
       return axios.get<T>(path, config)
     },
     post: <T>(path: string, data: JSONValue) => {
-      if (showLoading) { show() }
+      if (showLoading) { setVisible(true) }
       return axios.post<T>(path, data).finally(() => { if (showLoading)
-      { hide() } })
+      { setVisible(false) } })
     },
     patch: () => { },
     delete: () => { },
