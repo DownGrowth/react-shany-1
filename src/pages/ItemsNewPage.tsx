@@ -22,6 +22,9 @@ export const ItemsNewPage: React.FC = () => {
       text: '收入',
       element: <Tags kind="income" value={data.tag_ids} onChange={tag_ids => setData({ tag_ids })} />
     }]
+  const onSubmit = () => {
+    console.log('111')
+  }
   return (
     <div className={s.wrapper} h-screen flex flex-col>
       <Gradient className="grow-0 shrink-0">
@@ -31,7 +34,7 @@ export const ItemsNewPage: React.FC = () => {
       <div>
         {JSON.stringify(data)}
       </div>
-      <ItemAmount className="grow-0 shrink-0" value={data.amount} onChange={amount => setData({ amount })}
+      <ItemAmount className="grow-0 shrink-0" onSubmit={onSubmit} value={data.amount} onChange={amount => setData({ amount })}
         itemDate={<ItemDate value={data.happen_at} onChange={happen_at => setData({ happen_at })} />} />
     </div>
   )
