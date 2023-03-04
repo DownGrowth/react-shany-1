@@ -156,6 +156,7 @@ export class Time {
   }
 
   get isoString() {
+    // 只能获取整数时区如 08:00,不能获取非整数时区例如07:30
     const timeZone = Math.round(-this.#date.getTimezoneOffset() / 60)
     const absolute = Math.abs(timeZone)
     const sign = timeZone > 0 ? '+' : '-'
