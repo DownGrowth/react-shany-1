@@ -10,7 +10,7 @@ type Props = {
 }
 export const ItemAmount: React.FC<Props> = (props) => {
   const { value, onChange, onSubmit } = props
-  const [output, _setOutput] = useState(() => value?.toString() ?? '0')
+  const [output, _setOutput] = useState(value ? (value / 100)?.toString() : '0')
   const setOutput = (str: string) => {
     const dotIndex = str.indexOf('.')
     if (dotIndex >= 0 && str.length - dotIndex > 3) {
@@ -18,7 +18,7 @@ export const ItemAmount: React.FC<Props> = (props) => {
     }
     if (str.length > 16) { return }
     _setOutput(str)
-    onChange?.(parseFloat(str))
+    onChange?.(parseFloat(str) * 100)
   }
   const { className } = props
 
