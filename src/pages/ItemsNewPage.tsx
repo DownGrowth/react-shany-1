@@ -12,7 +12,7 @@ import { ItemDate } from './ItemsNewPage/ItemDate'
 import { Tags } from './ItemsNewPage/Tags'
 
 export const ItemsNewPage: React.FC = () => {
-  const { data, error, setData, setError } = useCreateItemStore()
+  const { data, setData, setError } = useCreateItemStore()
   const tabItems: { key: Item['kind']; text: string; element?: ReactNode }[]
     = [{
       key: 'expenses',
@@ -49,7 +49,6 @@ export const ItemsNewPage: React.FC = () => {
       </Gradient>
       <Tabs tabItems={tabItems} className="text-center grow-1 shrink-1 overflow-hidden" classPrefix='itemsNewPage' value={data.kind!} onChange={tabItems => setData({ kind: tabItems })} />
       <div>
-        {JSON.stringify(data)}
       </div>
       <ItemAmount className="grow-0 shrink-0" onSubmit={onSubmit} value={data.amount} onChange={amount => setData({ amount })}
         itemDate={<ItemDate value={data.happen_at} onChange={happen_at => setData({ happen_at })} />} />
