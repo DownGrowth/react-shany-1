@@ -47,7 +47,7 @@ export const ItemsNewPage: React.FC = () => {
       <Gradient className="grow-0 shrink-0">
         <TopNav title='记一笔' icon={<Icon name="back" className='w-24px h-24px' />} />
       </Gradient>
-      <Tabs tabItems={tabItems} className="text-center grow-1 shrink-1 overflow-hidden" classPrefix='itemsNewPage' value={data.kind!} onChange={tabItems => setData({ kind: tabItems })} />
+      <Tabs tabItems={tabItems} className="text-center grow-1 shrink-1 overflow-hidden" classPrefix='itemsNewPage' value={data.kind!} onChange={kind => setData({ kind })} />
       <div>
       </div>
       <ItemAmount className="grow-0 shrink-0" onSubmit={onSubmit} value={data.amount} onChange={amount => setData({ amount })}
