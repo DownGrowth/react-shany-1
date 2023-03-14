@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import useSWR from 'swr'
+import useSwr from 'swr'
 import { Icon } from '../../components/Icon'
 import { useAjax } from '../../lib/ajax'
 import { useTagsStore } from '../../stores/useTagsStore'
@@ -14,7 +14,7 @@ export const Tags: React.FC<Props> = (props) => {
   const { kind, value, onChange } = props
   const { list: tags, setList } = useTagsStore()
   const { get } = useAjax({ showLoading: true, handleError: true })
-  useSWR('api/v1/tags', async (path) => {
+  useSwr('api/v1/tags', async (path) => {
     const response = await get<Resources<Tag>>(path)
     setList(response.data.resources)
   })
