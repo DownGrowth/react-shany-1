@@ -30,7 +30,7 @@ export const Popup: React.FC<Props> = (props) => {
       ? (visible
           ? 'translateY(0%)'
           : 'translateY(100%)')
-      : (visible ? '' : 'translateY(-1000%)')
+      : (visible ? 'translateX(-50%)' : 'translateX(1000%)')
   })
   const styles = { ...maskStyles, visibility: (maskVisible ? 'visible' : 'hidden') as 'visible' | 'hidden' }
   return (

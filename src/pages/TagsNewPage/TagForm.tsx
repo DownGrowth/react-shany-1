@@ -1,7 +1,10 @@
+import type { AxiosError } from 'axios'
 import type { FormEventHandler } from 'react'
 import { useEffect } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { Input } from '../../components/Input'
+import { useAjax } from '../../lib/ajax'
+import type { FormError } from '../../lib/validate'
 import { hasError, validate } from '../../lib/validate'
 import { useCreateTagStore } from '../../stores/useCreateTagStore'
 
@@ -12,9 +15,9 @@ export const TagForm: React.FC<Props> = (props) => {
   const { type } = props
   const { data, error, setData, setError } = useCreateTagStore()
   const [searchParams] = useSearchParams()
+  const kind = searchParams.get('kind') ?? ''
   useEffect(() => {
     if (type !== 'create') { return }
-    const kind = searchParams.get('kind')
     if (!kind) {
       throw new Error('kind 必填')
     }
@@ -31,8 +34,19 @@ export const TagForm: React.FC<Props> = (props) => {
     // 发起 AJAX 请求
     // 然后 setData
   }, [])
-
-  const onSubmit: FormEventHandler = (e) => {
+  const { post } = useAjax({ showLoading: true, handleError: true })
+  const onSubmitError = (error: AxiosError<{ errors: FormError<typeof data> }>) => {
+    if (error.response) {
+      const { status } = error.response
+      if (status === 422) {
+        const { errors } = error.response.data
+        setError(errors)
+      }
+    }
+    throw error
+  }
+  const nav = useNavigate()
+  const onSubmit: FormEventHandler = async (e) => {
     e.preventDefault()
     const newError = validate(data, [
       { key: 'kind', type: 'required', message: '标签类型必填' },
@@ -43,6 +57,9 @@ export const TagForm: React.FC<Props> = (props) => {
     setError(newError)
     if (!hasError(newError)) {
       // 发起 AJAX 请求
+      const response = await post<Resource<Tag>>('api/v1/tags', data).catch(onSubmitError)
+      setData(response.data.resource)
+      nav(`/items/new?kind=${encodeURIComponent(kind)}`)
     }
   }
   return (
