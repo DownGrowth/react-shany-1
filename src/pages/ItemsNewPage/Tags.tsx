@@ -1,9 +1,8 @@
-import type { TouchEvent } from 'react'
-import { useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import useSWRInfinite from 'swr/infinite'
 import { Icon } from '../../components/Icon'
+import { LongPressable } from '../../components/LongPressable'
 import { useAjax } from '../../lib/ajax'
 
 type Props = {
@@ -38,31 +37,6 @@ export const Tags: React.FC<Props> = (props) => {
   const isLoading = isLoadingInitialData || isLoadingMore
   const onLoadMore = () => { setSize(size + 1) }
   const nav = useNavigate()
-  const touchTimer = useRef<number>()
-  const touchPosition = useRef<{ x?: number; y?: number }>({ x: undefined, y: undefined })
-  const onTouchStart = (e: TouchEvent<HTMLElement>, id: Tag['id']) => {
-    touchTimer.current = window.setTimeout(() => {
-      nav(`/tags/${id}`)
-    }, 800)
-    const { clientX: x, clientY: y } = e.touches[0]
-    touchPosition.current = { x, y }
-  }
-  const onTouchMove = (e: TouchEvent<HTMLElement>, id: Tag['id']) => {
-    const { clientX: newX, clientY: newY } = e.touches[0]
-    const { x, y } = touchPosition.current
-    if (x === undefined || y === undefined) { return }
-    const distance = Math.sqrt((newX - x) ** 2 + (newY - y) ** 2)
-    if (distance > 10) {
-      window.clearTimeout(touchTimer.current)
-      touchTimer.current = undefined
-    }
-  }
-  const onTouchEnd = (e: TouchEvent<HTMLElement>, id: Tag['id']) => {
-    if (touchTimer.current) {
-      window.clearTimeout(touchTimer.current)
-      touchTimer.current = undefined
-    }
-  }
   if (!data) {
     return <div>空</div>
   } else {
@@ -70,38 +44,39 @@ export const Tags: React.FC<Props> = (props) => {
     const { page, per_page, count } = last.pager
     const hasMore = (page - 1) * per_page + last.resources.length < count
     return (
-        <div >
-          <ol grid grid-cols="[repeat(auto-fit,48px)]" justify-center gap-x-32px gap-y-16px py-16px px-8px>
-            <li>
-              <Link to={`/tags/new?kind=${kind}`}>
+      <div >
+        <ol grid grid-cols="[repeat(auto-fit,48px)]" justify-center gap-x-32px gap-y-16px py-16px px-8px>
+          <li>
+            <Link to={`/tags/new?kind=${kind}`}>
               <span w-48px h-48px rounded='24px' bg="#EFEFEF" flex justify-center items-center text-24px text="#7bb0e2"> <Icon name="add" />
-                </span>
-                </Link>
-              </li>
-              {data.map(({ resources }) => {
-                return resources.map((tag, index) =>
-                  <li key={index} w-48px flex justify-center items-center flex-col gap-y-8px
-                    onClick={() => { onChange?.([tag.id]) }}
-                    onTouchStart={e => onTouchStart(e, tag.id)}
-                    onTouchMove={e => onTouchMove(e, tag.id)}
-                    onTouchEnd={e => onTouchEnd(e, tag.id)}
+              </span>
+            </Link>
+          </li>
+          {data.map(({ resources }) => {
+            return resources.map((tag, index) =>
+              <li key={index}
+                onClick={() => { onChange?.([tag.id]) }}
+              >
+                <LongPressable
+                  onEnd={() => { nav(`/tags/${tag.id}`) }}
+                  className="w-48px flex justify-center items-center flex-col gap-y-8px "
                 >
                   {value?.includes(tag.id)
                     ? <span w-48px h-48px rounded='24px' bg="#EFEFEF" flex justify-center items-center text-24px b-1 b="#7bb0e2">{tag.sign}</span>
                     : <span w-48px h-48px rounded='24px' bg="#EFEFEF" flex justify-center items-center text-24px >{tag.sign}</span>}
-
                   <span text-12px text="#666666">{tag.name}</span>
-                </li>
-                )
-              })}
-          </ol>
-          {error && <Div>数据加载失败，请刷新页面</Div>}
-      {!hasMore
-        ? page === 1 && last.resources.length === 0 ? <Div>点击加号，创建新标签</Div> : <Div>没有更多数据了</Div>
-        : isLoading
-          ? <Div>数据加载中...</Div>
-          : <Div><button b-btn onClick={onLoadMore}>加载更多</button></Div>}
-        </div>
+                </LongPressable>
+              </li>
+            )
+          })}
+        </ol>
+        {error && <Div>数据加载失败，请刷新页面</Div>}
+        {!hasMore
+          ? page === 1 && last.resources.length === 0 ? <Div>点击加号，创建新标签</Div> : <Div>没有更多数据了</Div>
+          : isLoading
+            ? <Div>数据加载中...</Div>
+            : <Div><button b-btn onClick={onLoadMore}>加载更多</button></Div>}
+      </div>
     )
   }
 }
