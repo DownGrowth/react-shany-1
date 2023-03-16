@@ -1,6 +1,7 @@
 import type { AxiosError } from 'axios'
 import type { FormEventHandler } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { BackIcon } from '../components/BackIcon'
 import { Gradient } from '../components/Gradient'
 import { Icon } from '../components/Icon'
 import { Input } from '../components/Input'
@@ -53,7 +54,7 @@ export const SignInPage: React.FC = () => {
   return (
     <div>
       <Gradient>
-        <TopNav title='登录页面' icon={<Icon name="back" className='w-24px h-24px'/> } />
+        <TopNav title='登录页面' icon={<BackIcon /> } />
       </Gradient>
       <div text-center pt-40px pb-16px>
         <Icon name="logo" className='w-64px h-68px' />

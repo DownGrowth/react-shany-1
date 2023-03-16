@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
+import { BackIcon } from '../components/BackIcon'
 import { Gradient } from '../components/Gradient'
-import { Icon } from '../components/Icon'
 import { Input } from '../components/Input'
 import { LineChart } from '../components/LineChart'
 import { PieChart } from '../components/PieChart'
@@ -41,7 +41,7 @@ export const StatisticsPage: React.FC = () => {
     <div>
       <Gradient>
         <TopNav title="统计图表" icon={
-          <Icon name="back" />
+          <BackIcon />
         } />
       </Gradient>
       <TimeRangePicker selected={timeRange} onSelect={setTimeRange} />
