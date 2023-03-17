@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import useSWR from 'swr'
 import { BackIcon } from '../components/BackIcon'
 import { Gradient } from '../components/Gradient'
 import { Input } from '../components/Input'
@@ -8,16 +9,29 @@ import { RankChart } from '../components/RankChart'
 import type { TimeRange } from '../components/TimeRangePicker'
 import { TimeRangePicker } from '../components/TimeRangePicker'
 import { TopNav } from '../components/TopNav'
-
+import { useAjax } from '../lib/ajax'
+import { time } from '../lib/time'
+type Groups = { happen_at: string; amount: number }[]
 export const StatisticsPage: React.FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>('thisMonth')
   const [x, setX] = useState('expenses')
   const [chart, setChart] = useState('lineChart')
-  const items = [
-    { date: '2000-01-01', value: 15000 },
-    { date: '2000-01-02', value: 25000 },
-    { date: '2000-01-31', value: 10000 },
-  ].map(item => ({ x: item.date, y: item.value / 100 }))
+  const { get } = useAjax({ showLoading: false, handleError: true })
+  const generateStartEnd = () => {
+    if (timeRange === 'thisMonth') {
+      const start = time().firstDayOfMonth.format('YYYY-MM-dd')
+      const end = time().lastDayOfMonth.add(1, 'day').format('YYYY-MM-dd')
+      return { start, end }
+    } else {
+      return { start: '', end: '' }
+    }
+  }
+  const { start, end } = generateStartEnd()
+  const { data: items } = useSWR(`/api/v1/items/summary?happened_after=${start}&happened_before=${end}&group_by=happen_at`,
+    async path =>
+      (await get<{ groups: Groups; total: number }>(path)).data.groups
+        .map(({ happen_at, amount }) => ({ x: happen_at, y: amount }))
+  )
   const items2 = [
     { tag: '吃饭', amount: 10000 },
     { tag: '打车', amount: 20000 },

@@ -68,6 +68,10 @@ export class Time {
     return new Time(new Date(this.year, this.month - 1 + 1, 0))
   }
 
+  get firstDayOfMonth() {
+    return new Time(new Date(this.year, this.month - 1, 1))
+  }
+
   get parts(): Parts {
     const year = this.#date.getFullYear()
     const month = this.#date.getMonth() + 1
