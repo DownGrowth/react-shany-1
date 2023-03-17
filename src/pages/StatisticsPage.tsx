@@ -14,7 +14,7 @@ import { time } from '../lib/time'
 type Groups = { happen_at: string; amount: number }[]
 export const StatisticsPage: React.FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>('thisMonth')
-  const [x, setX] = useState('expenses')
+  const [kind, setKind] = useState('expenses')
   const [chart, setChart] = useState('lineChart')
   const { get } = useAjax({ showLoading: false, handleError: true })
   const generateStartEnd = () => {
@@ -50,7 +50,7 @@ export const StatisticsPage: React.FC = () => {
     } else {
       return <RankChart items={items3} />
     }
-  }, [chart])
+  }, [chart, items])
   return (
     <div>
       <Gradient>
@@ -69,7 +69,7 @@ export const StatisticsPage: React.FC = () => {
           <Input type="select" options={[
             { text: '支出', value: 'expenses' },
             { text: '收入', value: 'income' },
-          ]} value={x} onChange={value => setX(value)} disableError />
+          ]} value={kind} onChange={value => setKind(value)} disableError />
         </div>
       </div>
       <div flex p-16px items-center gap-x-16px>
