@@ -72,7 +72,7 @@ export class Time {
     return new Time(new Date(this.year, this.month - 1, 1))
   }
 
-  get dayCountofMonth() {
+  get dayCountOfMonth() {
     return this.lastDayOfMonth.day
   }
 
