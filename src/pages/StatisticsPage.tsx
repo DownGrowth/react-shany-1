@@ -15,19 +15,33 @@ import { time } from '../lib/time'
 type Groups = { happen_at: string; amount: number }[]
 type Groups2 = { tag_id: string; tag: Tag; amount: number }[]
 const format = 'yyyy-MM-dd'
+type GetKeyParams = {
+  start: Time
+  end: Time
+  kind: Item['kind'] | string
+  group_by: 'happen_at' | 'tag_id'
+}
+const getKey = ({ start, end, kind, group_by }: GetKeyParams) => {
+  return `/api/v1/items/summary?happened_after=${start.format(format)}&happened_before=${end.format(format)}&kind=${kind}&group_by=${group_by}`
+}
+const timeRangeMap: { [k in TimeRange]: number } = {
+  thisYear: 0,
+  custom: 0,
+  thisMonth: 0,
+  lastMonth: -1,
+  twoMonthAgo: -2,
+  threeMonthAgo: -3,
+}
 export const StatisticsPage: React.FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>('thisMonth')
-  const [kind, setKind] = useState('expenses')
+  const [kind, setKind] = useState<Item['kind'] | string>('expenses')
   const [chart, setChart] = useState('lineChart')
   const { get } = useAjax({ showLoading: false, handleError: true })
   const generateStartEnd = () => {
-    if (timeRange === 'thisMonth') {
-      const start = time().firstDayOfMonth
-      const end = time().lastDayOfMonth.add(1, 'day')
-      return { start, end }
-    } else {
-      return { start: time(), end: time() }
-    }
+    const selected: Time = time().add(timeRangeMap[timeRange], 'month')
+    const start = selected.firstDayOfMonth
+    const end = start.lastDayOfMonth.add(1, 'day')
+    return { start, end }
   }
   const generateDefaultItems = (time: Time) => {
     return Array.from({ length: time.dayCountOfMonth }).map((_, i) => {
@@ -37,7 +51,7 @@ export const StatisticsPage: React.FC = () => {
   }
   const { start, end } = generateStartEnd()
   const defaultItems = generateDefaultItems(start)
-  const { data: items } = useSWR(`/api/v1/items/summary?happened_after=${start}&happened_before=${end}&group_by=happen_at`,
+  const { data: items } = useSWR(getKey({ start, end, kind, group_by: 'happen_at' }),
     async path =>
       (await get<{ groups: Groups; total: number }>(path)).data.groups
         .map(({ happen_at, amount }) =>
@@ -46,7 +60,7 @@ export const StatisticsPage: React.FC = () => {
   const normalizedItems = defaultItems?.map(defaultItem =>
     (items?.find(item => item.x === defaultItem.x)) || defaultItem
   )
-  const { data: items2 } = useSWR(`/api/v1/items/summary?happened_after=${start}&happened_before=${end}&group_by=tag_id`, async path =>
+  const { data: items2 } = useSWR(getKey({ start, end, kind, group_by: 'tag_id' }), async path =>
     (await get<{ groups: Groups2; total: number }>(path)).data.groups.map(({ tag_id, tag, amount }) => {
       return { name: tag.name, value: (amount / 100).toFixed(2), sign: tag.sign }
     }
@@ -60,7 +74,7 @@ export const StatisticsPage: React.FC = () => {
     } else {
       return <RankChart items={items2} />
     }
-  }, [chart, items])
+  }, [chart, items, items2])
   return (
     <div>
       <Gradient>

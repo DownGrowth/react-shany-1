@@ -21,7 +21,7 @@ export const Tabs = <T extends string>(props: Props<T>) => {
         bg="[rgb(255,252,237)]" grow-0 shrink-0
         className={classPrefix ? `${classPrefix}-menu` : ''}
       >
-        {tabItems.map(item => <li key={item.key} className={
+        {tabItems.map(item => <li key={item.key} whitespace-nowrap className={
           cs(item.key === value ? s.selected : '',
             classPrefix ? `${classPrefix}-menu-item` : '')
           }
