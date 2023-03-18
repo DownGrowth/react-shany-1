@@ -29,15 +29,14 @@ export const StatisticsPage: React.FC = () => {
     }
   }
   const generateDefaultItems = (time: Time) => {
-    return Array.from({ length: start.dayCountOfMonth }).map((_, i) => {
-      const x = start.clone.add(i, 'day').format(format)
+    return Array.from({ length: time.dayCountOfMonth }).map((_, i) => {
+      const x = time.clone.add(i, 'day').format(format)
       return { x, y: 0 }
     })
   }
-
   const { start, end } = generateStartEnd()
-  console.log(start)
   const defaultItems = generateDefaultItems(start)
+  console.log(defaultItems)
   const { data: items } = useSWR(`/api/v1/items/summary?happened_after=${start}&happened_before=${end}&group_by=happen_at`,
     async path =>
       (await get<{ groups: Groups; total: number }>(path)).data.groups
