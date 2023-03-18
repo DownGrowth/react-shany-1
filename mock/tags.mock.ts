@@ -39,7 +39,7 @@ export const tagsMock: MockMethod[] = [{
   url: '/api/v1/tags',
   method: 'get',
   statusCode: 200,
-  response: ({ query }: ResponseParms): Resources<Tag> => {
+  response: ({ query }: ResponseParams): Resources<Tag> => {
     return createResponse({ count: 91, perPage: 50, page: parseInt(query.page) || 1 })
   }
 },
@@ -47,7 +47,7 @@ export const tagsMock: MockMethod[] = [{
   url: '/api/v1/tags',
   method: 'post',
   statusCode: 200,
-  response: ({ query }: ResponseParms): Resource<Tag> => {
+  response: ({ query }: ResponseParams): Resource<Tag> => {
     return { resource: create() }
   }
 },
@@ -55,7 +55,7 @@ export const tagsMock: MockMethod[] = [{
   url: '/api/v1/tags/:id',
   method: 'get',
   statusCode: 200,
-  response: ({ query }: ResponseParms): Resource<Tag> => {
+  response: ({ query }: ResponseParams): Resource<Tag> => {
     return { resource: create() }
   }
 },
@@ -63,7 +63,7 @@ export const tagsMock: MockMethod[] = [{
   url: '/api/v1/tags/:id',
   method: 'patch',
   statusCode: 200,
-  response: ({ query }: ResponseParms): Resource<Tag> => {
+  response: ({ query }: ResponseParams): Resource<Tag> => {
     return { resource: create() }
   }
 },

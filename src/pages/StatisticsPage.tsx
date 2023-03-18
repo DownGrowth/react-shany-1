@@ -13,6 +13,7 @@ import { useAjax } from '../lib/ajax'
 import type { Time } from '../lib/time'
 import { time } from '../lib/time'
 type Groups = { happen_at: string; amount: number }[]
+type Groups2 = { tag_id: string; tag: Tag; amount: number }[]
 const format = 'yyyy-MM-dd'
 export const StatisticsPage: React.FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>('thisMonth')
@@ -36,7 +37,6 @@ export const StatisticsPage: React.FC = () => {
   }
   const { start, end } = generateStartEnd()
   const defaultItems = generateDefaultItems(start)
-  console.log(defaultItems)
   const { data: items } = useSWR(`/api/v1/items/summary?happened_after=${start}&happened_before=${end}&group_by=happen_at`,
     async path =>
       (await get<{ groups: Groups; total: number }>(path)).data.groups
@@ -45,11 +45,13 @@ export const StatisticsPage: React.FC = () => {
   const normalizedItems = defaultItems?.map(defaultItem =>
     (items?.find(item => item.x === defaultItem.x)) || defaultItem
   )
-  const items2 = [
-    { tag: '吃饭', amount: 10000 },
-    { tag: '打车', amount: 20000 },
-    { tag: '买皮肤', amount: 68800 },
-  ].map(item => ({ x: item.tag, y: item.amount / 100 }))
+  const { data: data2 } = useSWR(`/api/v1/items/summary?happened_after=${start}&happened_before=${end}&group_by=tag_id`, async path =>
+    (await get<{ groups: Groups2; total: number }>(path)).data
+  )
+  const { groups: groups2, total: total2 } = data2 ?? {}
+  const items2 = groups2?.map((item) => {
+    return { name: item.tag.name, value: item.amount, sign: item.tag.sign }
+  })
   const items3 = [
     { tag: { name: '吃饭', sign: '😨' }, amount: 10000 },
     { tag: { name: '打车', sign: '🥱' }, amount: 20000 },

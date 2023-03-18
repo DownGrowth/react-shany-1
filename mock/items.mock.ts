@@ -40,7 +40,7 @@ export const itemsMock: MockMethod[] = [{
   url: '/api/v1/items',
   method: 'get',
   statusCode: 200,
-  response: ({ query }: ResponseParms): Resources<Item> => {
+  response: ({ query }: ResponseParams): Resources<Item> => {
     return createResponse({ count: 30, perPage: 10, page: parseInt(query.page) || 1 })
   },
 }]
