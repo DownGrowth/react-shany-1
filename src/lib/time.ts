@@ -72,6 +72,10 @@ export class Time {
     return new Time(new Date(this.year, this.month - 1, 1))
   }
 
+  get dayCountofMonth() {
+    return this.lastDayOfMonth.day
+  }
+
   get parts(): Parts {
     const year = this.#date.getFullYear()
     const month = this.#date.getMonth() + 1
@@ -157,6 +161,10 @@ export class Time {
 
   set ms(v) {
     this.parts = { ms: v }
+  }
+
+  get clone() {
+    return new Time(this.#date)
   }
 
   get isoString() {
