@@ -17,7 +17,12 @@ export const PieChart: React.FC<Props> = (props) => {
     myChart.current = echarts.init(div.current)
     initialized.current = true
     const option: EChartsOption = {
-      tooltip: { trigger: 'item' },
+      tooltip: {
+        trigger: 'item',
+        formatter: ({ data: { name, value, sign } }: any) => {
+          return `${sign} ${name}: ${value}元`
+        }
+      },
       grid: { top: 0, left: 0, bottom: 0, right: 0 },
       series: [{
         type: 'pie',

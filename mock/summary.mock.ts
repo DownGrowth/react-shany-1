@@ -7,9 +7,9 @@ export const summaryMock: MockMethod[] = [{
   response: ({ query }: ResponseParams) => {
     if (query.group_by === 'happen_at') { return {
       groups: [
-        { happen_at: '2023-03-18', tag: null, amount: 300 },
-        { happen_at: '2023-03-19', tag: null, amount: 400 },
-        { happen_at: '2023-03-20', tag: null, amount: 500 },
+        { happen_at: '2023-03-19', amount: 400 },
+        { happen_at: '2023-03-20', amount: 500 },
+        { happen_at: '2023-03-18', amount: 300 },
       ],
       total: 900
     }
@@ -28,7 +28,7 @@ export const summaryMock: MockMethod[] = [{
               updated_at: '2023-03-08T00:30:18.607+08:00',
               kind: 'expenses'
             },
-            amount: 500
+            amount: 510
           },
           {
             tag_id: 670,
