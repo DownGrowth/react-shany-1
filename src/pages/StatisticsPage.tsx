@@ -52,18 +52,13 @@ export const StatisticsPage: React.FC = () => {
     }
     )
   )
-  const items3 = [
-    { tag: { name: '吃饭', sign: '😨' }, amount: 10000 },
-    { tag: { name: '打车', sign: '🥱' }, amount: 20000 },
-    { tag: { name: '买皮肤', sign: '💖' }, amount: 68800 },
-  ].map(item => ({ name: item.tag.name, value: item.amount, sign: item.tag.sign }))
   const computedChart = useMemo(() => {
     if (chart === 'lineChart') {
       return <LineChart className="h-120px" items={normalizedItems} />
     } else if (chart === 'pieChart') {
       return <PieChart className="h-260px" items={items2} />
     } else {
-      return <RankChart items={items3} />
+      return <RankChart items={items2} />
     }
   }, [chart, items])
   return (
