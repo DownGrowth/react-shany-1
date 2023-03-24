@@ -47,10 +47,10 @@ export const TimeRangePicker: React.FC<Props> = (props) => {
   }
   const { popup, show } = usePopup({
     children: <div onClick={onConfirm}>
-    <header text-18px bg="[var(--color-blue)]" text-white py-13px p-l-16px>请选择时间</header>
+    <header text-18px bg="[var(--color-blue)]" text="[var(--text-main)]" py-13px p-l-16px>请选择时间</header>
     <main p-16px>
-      <Input disableError label="开始时间" value={start} onChange={d => setStart(d)} />
-      <Input disableError label="结束时间" value={end} onChange={d => setEnd(d)} />
+      <Input type="date" disableError label="开始时间" value={start} onChange={d => setStart(d)} />
+      <Input type="date" className="mt-8px" disableError label="结束时间" value={end} onChange={d => setEnd(d)} />
     </main>
     <footer text-right>
       <button border-none bg-transparent px-16px py-8px>取消</button>
