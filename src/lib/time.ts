@@ -21,6 +21,11 @@ export class Time {
     this.#date = p ? new Date(p) : new Date()
   }
 
+  set(parts: Partial<Parts>) {
+    this.parts = parts
+    return this
+  }
+
   /**
    * 格式化输出
    * @param pattern 目前只支持 yyyy MM dd HH mm ss fff，默认值为yyyy-MM-dd

@@ -11,7 +11,7 @@ import { TimeRangePicker } from '../components/TimeRangePicker'
 import { TopNav } from '../components/TopNav'
 import { useAjax } from '../lib/ajax'
 import type { Time } from '../lib/time'
-import { time } from '../lib/time'
+import { timeRangeToStartAndEnd } from '../lib/timeRangeToStartAndEnd'
 type Groups = { happen_at: string; amount: number }[]
 type Groups2 = { tag_id: string; tag: Tag; amount: number }[]
 const format = 'yyyy-MM-dd'
@@ -24,32 +24,20 @@ type GetKeyParams = {
 const getKey = ({ start, end, kind, group_by }: GetKeyParams) => {
   return `/api/v1/items/summary?happened_after=${start.format(format)}&happened_before=${end.format(format)}&kind=${kind}&group_by=${group_by}`
 }
-const timeRangeMap: { [k in TimeRange]: number } = {
-  thisYear: 0,
-  custom: 0,
-  thisMonth: 0,
-  lastMonth: -1,
-  twoMonthAgo: -2,
-  threeMonthAgo: -3,
-}
+
 export const StatisticsPage: React.FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>('thisMonth')
   const [kind, setKind] = useState<Item['kind'] | string>('expenses')
   const [chart, setChart] = useState('lineChart')
   const { get } = useAjax({ showLoading: false, handleError: true })
-  const generateStartEnd = () => {
-    const selected: Time = time().add(timeRangeMap[timeRange], 'month')
-    const start = selected.firstDayOfMonth
-    const end = start.lastDayOfMonth.add(1, 'day')
-    return { start, end }
-  }
+
   const generateDefaultItems = (time: Time) => {
     return Array.from({ length: time.dayCountOfMonth }).map((_, i) => {
       const x = time.clone.add(i, 'day').format(format)
       return { x, y: 0 }
     })
   }
-  const { start, end } = generateStartEnd()
+  const { start, end } = timeRangeToStartAndEnd(timeRange)
   const defaultItems = generateDefaultItems(start)
   const { data: items } = useSWR(getKey({ start, end, kind, group_by: 'happen_at' }),
     async path =>
