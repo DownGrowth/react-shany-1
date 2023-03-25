@@ -43,7 +43,7 @@ export const ItemsPage: React.FC = () => {
       {outOfRange
         ? <div text-center p-32px> 时间选择范围不能超过 365 天</div>
         : <>
-        <ItemSummary />
+        <ItemSummary start={start} end={end}/>
         <ItemsList start={start} end={end} /> </>
       }
       <AddItemFloatButton />
