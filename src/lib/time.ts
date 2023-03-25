@@ -61,6 +61,11 @@ export class Time {
     return this
   }
 
+  removeTime() {
+    this.set({ hours: 0, minutes: 0, seconds: 0, ms: 0 })
+    return this
+  }
+
   get date() {
     return new Date(this.#date)
   }

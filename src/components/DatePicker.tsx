@@ -10,14 +10,15 @@ type Props = {
   onConfirm?: (value: Date) => void
 }
 export const DatePicker: React.FC<Props> = (props) => {
+  const getNow = () => time().set({ hours: 0, minutes: 0, seconds: 0, ms: 0 })
   const { start, end, value, onCancel, onConfirm } = props
-  const startTime = start ? time(start) : time().add(-10, 'year')
-  const endTime = end ? time(end) : time().add(10, 'year')
+  const startTime = start ? time(start) : getNow().add(-10, 'year')
+  const endTime = end ? time(end) : getNow().add(10, 'year')
   if (endTime.timestamp <= startTime.timestamp) {
     throw new Error('结束时间必须晚于开始时间')
   }
   const [, update] = useState({})
-  const valueTime = useRef(value ? time(value) : time())
+  const valueTime = useRef(value ? time(value) : getNow())
   const yearList = Array.from({ length: endTime.year - startTime.year + 1 }).map((_, index) => startTime.year + index)
   const monthList = Array.from({ length: 12 }).map((_, index) => index + 1)
   const dayList = Array.from({ length: valueTime.current.lastDayOfMonth.day }).map((_, index) => index + 1)

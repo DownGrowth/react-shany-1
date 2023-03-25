@@ -7,7 +7,6 @@ import { TimeRangePicker } from '../components/TimeRangePicker'
 import { TopMenu } from '../components/TopMenu'
 import { TopNav } from '../components/TopNav'
 import { time } from '../lib/time'
-import { timeRangeToStartAndEnd } from '../lib/timeRangeToStartAndEnd'
 import { useMenuStore } from '../stores/useMenuStore'
 import { ItemsList } from './itemsPage/ItemsList'
 import { ItemSummary } from './itemsPage/ItemsSummary'
@@ -19,7 +18,7 @@ export const ItemsPage: React.FC = () => {
     end: time().lastDayOfMonth.add(1, 'day')
   })
   const { visible, setVisible } = useMenuStore()
-  const { start, end } = timeRangeToStartAndEnd(timeRange)
+  const { start, end } = timeRange
   return (
     <div>
       <Gradient>
