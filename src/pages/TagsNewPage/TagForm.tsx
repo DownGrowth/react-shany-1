@@ -54,7 +54,7 @@ export const TagForm: React.FC<Props> = (props) => {
     const newError = validate(data, [
       { key: 'kind', type: 'required', message: '标签类型必填' },
       { key: 'name', type: 'required', message: '标签名必填' },
-      { key: 'name', type: 'length', max: 12, message: '标签名最多12个字符' },
+      { key: 'name', type: 'length', max: 4, message: '标签名最多4个字符' },
       { key: 'sign', type: 'required', message: '符号必填' },
     ])
     setError(newError)
