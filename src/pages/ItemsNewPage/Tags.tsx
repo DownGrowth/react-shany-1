@@ -62,7 +62,7 @@ export const Tags: React.FC<Props> = (props) => {
                   className="w-48px flex justify-center items-center flex-col gap-y-8px "
                 >
                   {value?.includes(tag.id)
-                    ? <span w-48px h-48px rounded='24px' bg="#EFEFEF" flex justify-center items-center text-24px b-1 b="#7bb0e2">{tag.sign}</span>
+                    ? <span w-48px h-48px rounded='24px' bg="#EFEFEF" flex justify-center items-center text-24px b-1 b-solid b="#7bb0e2">{tag.sign}</span>
                     : <span w-48px h-48px rounded='24px' bg="#EFEFEF" flex justify-center items-center text-24px >{tag.sign}</span>}
                   <span text-12px text="#666666">{tag.name}</span>
                 </LongPressable>

@@ -10,7 +10,7 @@ export const EmojiInput: React.FC<Props> = (props) => {
   const { value, onChange } = props
   const [emojiKind, setEmojiKind] = useState('表情')
   return (
-    <div className={s.wrapper} b-1 b="#5C33BE" rounded-8px>
+    <div className={s.wrapper} b-1 b-solid b="#5C33BE" rounded-8px>
       <div flex p-8px gap-x-16px overflow-auto text="#999">
         {emojis.map(emoji =>
           <span whitespace-nowrap key={emoji.name}
@@ -24,7 +24,7 @@ export const EmojiInput: React.FC<Props> = (props) => {
             grid grid-cols="[repeat(auto-fit,34px)]" grid-rows="[repeat(auto-fit,34px)]"
             justify-center>
             {emoji.chars.map(char =>
-               <span key={char} b-1 b-transparent rounded-4px className={char === value ? s.selected : ''} onClick={() => value !== char && onChange?.(char)}>{char}</span>)}
+               <span key={char} b-1 b-solid b-transparent rounded-4px className={char === value ? s.selected : ''} onClick={() => value !== char && onChange?.(char)}>{char}</span>)}
           </div>)}
       </div>
     </div>
