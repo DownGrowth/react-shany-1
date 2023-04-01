@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import { Navigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import p from '../assets/images/mountain.svg'
 import { useTitle } from '../hooks/useTitle'
 import { Loading } from '../components/Loading'
@@ -28,8 +28,10 @@ export const Home: React.FC<Props> = (props) => {
     <div flex justify-center items-center>
       <img mt-20vh mb-20vh width="186" height="186" src={p} />
       </div>
-      <div px-16px>
-      <button b-btn>开始记账</button>
+    <div px-16px>
+      <Link to={'/items'}>
+        <button b-btn>开始记账</button>
+        </Link>
       </div>
       <AddItemFloatButton />
   </div>
