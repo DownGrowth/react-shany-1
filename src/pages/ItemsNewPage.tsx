@@ -49,7 +49,7 @@ export const ItemsNewPage: React.FC = () => {
   return (
     <div className={s.wrapper} h-screen flex flex-col>
       <Gradient className="grow-0 shrink-0">
-        <TopNav title='记一笔' icon={<BackIcon />} />
+        <TopNav title='记一笔' icon={<BackIcon route='/items'/>} />
       </Gradient>
       <Tabs tabItems={tabItems} className="text-center grow-1 shrink-1 overflow-hidden" classPrefix='itemsNewPage' value={data.kind!} onChange={kind => setData({ kind })} />
       <div>

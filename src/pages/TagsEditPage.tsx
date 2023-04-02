@@ -26,7 +26,7 @@ export const TagsEditPage: React.FC = () => {
   return (
     <div>
       <Gradient className="grow-0 shrink-0">
-        <TopNav title="查看标签" icon={<BackIcon />} />
+        <TopNav title="查看标签" icon={<BackIcon route='/items/new'/>} />
       </Gradient>
       <TagForm type="edit" />
       <div px-16px p-b-32px>
