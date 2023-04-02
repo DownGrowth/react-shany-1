@@ -25,8 +25,9 @@ export const ItemsList: React.FC<Props> = ({ start, end }) => {
   const { get } = useAjax()
   const { data, error, size, setSize } = useSWRInfinite(
     getKey, async path => (await get<Resources<Item>>(path)).data,
-    { revalidateFirstPage: false }
+    { revalidateAll: true }
   )
+
   const onLoadMore = () => {
     setSize(size + 1)
   }
