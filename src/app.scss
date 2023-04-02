@@ -31,3 +31,17 @@
     outline: none;
   }
   ::-webkit-scrollbar{display: none;}
+
+  @media (min-width:500px) {
+    body{
+      background: #d7e7ec;
+    }
+    #root{
+      background:white;
+      min-height: 100vh;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
