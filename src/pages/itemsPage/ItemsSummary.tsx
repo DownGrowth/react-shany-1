@@ -13,7 +13,7 @@ export const ItemSummary: React.FC<Props> = ({ start, end }) => {
     (await get<{ balance: number; expenses: number; income: number }>(path)).data)
   const { balance, expenses, income } = data ?? { balance: 0, expenses: 0, income: 0 }
   return (
-    <ol bg="#e1f8ed" flex justify-between items-center m-16px rounded-24px py-12px children-px-24px text-center>
+    <ol bg="#e1f8ed" flex justify-between items-center m-16px rounded-24px px-24px py-12px children-px-4px text-center>
       <li text='#d47678'>
         <div>收入</div>
         <div><Money value={income} /></div>

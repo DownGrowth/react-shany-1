@@ -41,6 +41,9 @@ export const PieChart: React.FC<Props> = (props) => {
     myChart.current?.setOption(option)
   }, [items])
   return (
-    <div ref={div} className={className}></div>
+    <>
+      <div ref={div} className={className}/>
+      {items.length === 0 && <div text-center>暂无数据</div>}
+    </>
   )
 }
