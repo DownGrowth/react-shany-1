@@ -17,6 +17,7 @@ import { Welcome2 } from '../pages/Welcome2'
 import { Welcome3 } from '../pages/Welcome3'
 import { Welcome4 } from '../pages/Welcome4'
 import { ajax } from '../lib/ajax'
+import { ComingSoonPage } from '../pages/ComingSoonPage'
 
 export const router = createBrowserRouter([
   {
@@ -44,9 +45,7 @@ export const router = createBrowserRouter([
     element: <Outlet />,
     errorElement: <ErrorPage />,
     loader: async () => ajax.get<Resource<User>>('/api/v1/me').catch((e) => {
-      if (e.response?.status === 401) {
-        throw new ErrorUnauthorized()
-      }
+      if (e.response?.status === 401) { throw new ErrorUnauthorized() }
     }),
     children: [
       {
@@ -73,9 +72,8 @@ export const router = createBrowserRouter([
       { path: '/tags/:id', element: <TagsEditPage /> },
       { path: '/items/new', element: <ItemsNewPage/>, },
       { path: '/statistics', element: <StatisticsPage /> },
-      { path: '/export', element: <div>敬请期待</div> },
-      { path: '/tags', element: <div>标签</div> },
-      { path: '/noty', element: <div>敬请期待</div> },
+      { path: '/export', element: <ComingSoonPage/> },
+      { path: '/noty', element: <ComingSoonPage/> },
     ],
   },
 ])
