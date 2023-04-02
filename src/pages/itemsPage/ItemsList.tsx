@@ -54,7 +54,7 @@ export const ItemsList: React.FC<Props> = ({ start, end }) => {
             {item.tags?.[0].name}
           </div>
           <div row-start-2 col-start-2 row-end-3 col-end-4 text="#999999">
-            {time(item.happen_at).format('yyyy-MM-dd')}
+            {time(item.happen_at).format('yyyy-MM-dd HH:mm:ss')}
           </div>
           <div row-start-1 col-start-3 row-end-2 col-end-4 text="#53A867">
             ￥{item.amount / 100}
