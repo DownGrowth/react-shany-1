@@ -15,9 +15,7 @@ export default defineConfig(({ command }) => ({
     }
   },
   define: {
-    isDev: {
-      isDev: command === 'serve'
-    }
+    isDev: command === 'serve'
   },
   plugins: [
     Unocss(),
