@@ -10,7 +10,7 @@ export default defineConfig(({ command }) => ({
     proxy: {
       '/api/': {
         target: 'http://121.196.236.94:8080/',
-        changeOrigin: true,
+        changeOrigin: false,
       },
     }
   },
