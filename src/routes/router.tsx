@@ -1,5 +1,5 @@
 import type { AxiosError } from 'axios'
-import { Outlet, createBrowserRouter } from 'react-router-dom'
+import { Outlet, createHashRouter } from 'react-router-dom'
 import { Root } from '../components/Root'
 import { ErrorEmptyData, ErrorUnauthorized } from '../error'
 import { WelcomeLayout } from '../layouts/WelcomeLayout'
@@ -19,7 +19,7 @@ import { Welcome4 } from '../pages/Welcome4'
 import { ajax } from '../lib/ajax'
 import { ComingSoonPage } from '../pages/ComingSoonPage'
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: '/home',
     element: <Home title="首页" />
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
     element: <Outlet />,
     errorElement: <ErrorPage />,
     loader: async () => ajax.get<Resource<User>>('/api/v1/me').catch((e) => {
-      if (e.response?.status === 401) { throw new ErrorUnauthorized() }
+      if (e.response?.status === 401 ?? 404) { throw new ErrorUnauthorized() }
     }),
     children: [
       {

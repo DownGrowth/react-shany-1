@@ -8,5 +8,5 @@ git commit -m deploy
 git remote add origin git@github.com:DownGrowth/react-shany-1-preview.git
 git branch -M master
 git push -f origin master:master
-echo "部署成功"
+echo "======================部署成功========================="
 cd -

@@ -17,7 +17,7 @@ export const CurrentUser: React.FC<Props> = ({ className }) => {
   const from = encodeURIComponent(`${loc.pathname}${loc.search}`)
   const signOut = comfirmable('确定要退出登录吗？', () => {
     window.localStorage.removeItem('jwt')
-    nav('/home')
+    nav('/')
   })
   return (
     <div block className={className} bg="[var(--color-blue)]" text-white w="100%" pt-32px pb-44px px-16px>
