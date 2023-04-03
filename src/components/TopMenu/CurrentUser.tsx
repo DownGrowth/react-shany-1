@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import useSWR from 'swr'
 import { useAjax } from '../../lib/ajax'
 import { comfirmable } from '../../lib/comfirmable'
@@ -11,12 +11,13 @@ export const CurrentUser: React.FC<Props> = ({ className }) => {
   const { data: me, error } = useSWR('/api/v1/me', async path =>
     (await get<Resource<User>>(path)).data.resource
   )
+  const nav = useNavigate()
   const name = me?.name ?? me?.email
   const loc = useLocation()
   const from = encodeURIComponent(`${loc.pathname}${loc.search}`)
   const signOut = comfirmable('确定要退出登录吗？', () => {
     window.localStorage.removeItem('jwt')
-    window.location.reload()
+    nav('/home')
   })
   return (
     <div block className={className} bg="[var(--color-blue)]" text-white w="100%" pt-32px pb-44px px-16px>
