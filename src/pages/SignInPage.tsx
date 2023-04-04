@@ -38,6 +38,7 @@ export const SignInPage: React.FC = () => {
       localStorage.setItem('jwt', jwt)
       // 回到首页
       const from = search.get('from') || '/items'
+      setData({ code: '' })
       nav(from)
     }
   }
