@@ -1,6 +1,6 @@
 import type { AxiosError } from 'axios'
 import { Outlet, createHashRouter } from 'react-router-dom'
-import { Suspense, lazy } from 'react'
+import loadable from '@loadable/component'
 import { Root } from '../components/Root'
 import { ErrorEmptyData, ErrorUnauthorized } from '../error'
 import { WelcomeLayout } from '../layouts/WelcomeLayout'
@@ -19,7 +19,7 @@ import { Welcome4 } from '../pages/Welcome4'
 import { ajax } from '../lib/ajax'
 import { ComingSoonPage } from '../pages/ComingSoonPage'
 import { Loading } from '../components/Loading'
-const StatisticsPage = lazy(() => import('../pages/StatisticsPage'))
+const StatisticsPage = loadable(() => import('../pages/StatisticsPage'), { fallback: <Loading className='h-screen'/> })
 
 export const router = createHashRouter([
   {
@@ -73,7 +73,7 @@ export const router = createHashRouter([
       { path: '/tags/new', element: <TagsNewPage /> },
       { path: '/tags/:id', element: <TagsEditPage /> },
       { path: '/items/new', element: <ItemsNewPage/>, },
-      { path: '/statistics', element: <Suspense fallback={<Loading className='h-screen'/> }><StatisticsPage /></Suspense> },
+      { path: '/statistics', element: <StatisticsPage /> },
       { path: '/export', element: <ComingSoonPage/> },
       { path: '/noty', element: <ComingSoonPage/> },
     ],
