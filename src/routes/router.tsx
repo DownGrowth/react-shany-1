@@ -22,7 +22,7 @@ import { ComingSoonPage } from '../pages/ComingSoonPage'
 export const router = createHashRouter([
   {
     path: '/home',
-    element: <Home title="首页" />
+    element: <Home />
   },
   {
     path: '/',
