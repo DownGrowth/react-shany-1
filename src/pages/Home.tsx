@@ -1,6 +1,5 @@
 import useSWR from 'swr'
 import { Link, Navigate } from 'react-router-dom'
-import { Loading } from '../components/Loading'
 import { AddItemFloatButton } from '../components/AddItemFloatButton'
 import { useAjax } from '../lib/ajax'
 import { Icon } from '../components/Icon'
@@ -16,7 +15,9 @@ export const Home: React.FC<Props> = (props) => {
   const isLoadingMe = !meData && !meError
   const isLoadingItems = meData && !itemsData && !itemsError
   if (isLoadingMe || isLoadingItems) {
-    return <Loading className="h-screen" message='加载中...'/>
+    return <div flex text-center justify-center items-center h-screen>
+      <div >加载中...</div>
+    </div>
   }
   if (itemsData?.resources[0]) {
     return <Navigate to="/items" />
